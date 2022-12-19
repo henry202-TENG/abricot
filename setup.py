@@ -1,17 +1,6 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="abricot",
-    version="0.0.2",
-    author="TENG, CHIHHENG",
-    author_email="wiiiy5505aa@gmail.com",
-    description="henry teng's functions",
-
-    # project main page
-    url="http://google.com/",
-
-    python_requires='>=3',
-
     # install_requires
     # package==version
     # setuptools==38.2.4
