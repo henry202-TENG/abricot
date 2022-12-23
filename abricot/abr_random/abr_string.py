@@ -1,3 +1,4 @@
+""" random a string """
 from random import Random
 
 def generate_random_string(string_len=16, s_symbol=False)-> str:
@@ -9,7 +10,7 @@ def generate_random_string(string_len=16, s_symbol=False)-> str:
     Returns:
         str: A random string.
     """
-    str = ''
+    return_str = ''
     special_symbol = '@#$%^&*!~?>:;'
     chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789'
     if s_symbol:
@@ -18,5 +19,5 @@ def generate_random_string(string_len=16, s_symbol=False)-> str:
     length = len(chars) - 1
     random = Random()
     for _ in range(string_len):
-        str+=chars[random.randint(0,length)]
-    return str
+        return_str+=chars[random.randint(0,length)]
+    return return_str

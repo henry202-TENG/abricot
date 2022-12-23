@@ -1,6 +1,12 @@
+""" thread """
 import threading
 
 def thread_a_func(func, *args):
-    t = threading.Thread(target=func, args=args)
-    t.setDaemon(True)
-    t.start()
+    """ make a function as daemon.
+
+    Args:
+        func (func): The function to be set.
+    """
+    thread = threading.Thread(target=func, args=args)
+    thread.setDaemon(True)
+    thread.start()
