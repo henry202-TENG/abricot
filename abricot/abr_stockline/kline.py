@@ -12,10 +12,8 @@ import mplfinance as mpf
 # time
 import datetime as datetime
 
-def stock_kline(stock_id):
+def stock_kline(stock_id,time_start,time_end):
     ## 取得股票
-    time_start = input("輸入開始日期 : ")
-    time_end = input("輸入結束日期 : ")
     ssl._create_default_https_context = ssl._create_unverified_context
     df=yf.download(stock_id,time_start,time_end)
     address = r"/Users/duzhiwen/stock/" + stock_id +" " + time_start + "~" + time_end + ".csv"
