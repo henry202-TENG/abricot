@@ -51,7 +51,7 @@ data["long_mom"] = data["rsi"].rolling(window=20,min_periods=1,center=False).mea
 data["short_mov"] = data["Close"].rolling(window=10,min_periods=1,center=False).mean()
 data["long_mov"] = data["Close"].rolling(window=20,min_periods=1,center=False).mean()
 # 標記Labels,上升趨勢標的為1，反之標記為0
-data['label'] = np.where(data.short_mov > data.long_mov, 1, 0)
+data['label'] = np.where((data.short_mov > data.long_mov) & (data.short_mom > data.long_mom), 1, 0)
 data = data.drop(columns=["short_mov"])
 data = data.drop(columns=["long_mov"])
 data = data.drop(columns=["short_mom"])
