@@ -83,7 +83,7 @@ X_train, y_train, X_test, y_test = np.array(train_X), np.array(train_y), np.arra
 X_train = np.reshape(X_train, (X_train.shape[0],1,-1))
 y_train = np.reshape(y_train, (y_train.shape[0],1,1))
 X_test = np.reshape(X_test, (X_test.shape[0],1,-1))
-y_test = np.reshape(y_test, (X_test.shape[0],1,1))
+y_test = np.reshape(y_test, (y_test.shape[0],1,1))
 
 ### LSTM 模型
 from keras.models import Sequential    #引入Sequential函式
