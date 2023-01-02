@@ -14,6 +14,7 @@ import mplfinance as mpf
 import seaborn as sns
 from matplotlib.font_manager import fontManager
 from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 
 #time
@@ -85,23 +86,30 @@ X_test = np.reshape(X_test, (X_test.shape[0],1,-1))
 y_test = np.reshape(y_test, (X_test.shape[0],1,1))
 
 ### LSTM 模型
-from keras.models import Sequential
-from keras.layers import Dense
+from keras.models import Sequential    #引入Sequential函式
+from keras.layers import Dense    #引入層數
 from keras.layers import LSTM
 from keras.layers import Dropout
 from keras.layers import BatchNormalization
 
-regressor = Sequential()
+# Sequential()順序模型
+regressor = Sequential()    #定義模型
+# Adding the first LSTM layer and some Dropout regularisation
 regressor.add(LSTM(units = 32, return_sequences = True, input_shape = (X_train.shape[1], X_train.shape[2])))
 regressor.add(BatchNormalization())
 regressor.add(Dropout(0.35))
+# Adding a second LSTM layer and some Dropout regularisation
 regressor.add(LSTM(units = 32, return_sequences = True))
 regressor.add(Dropout(0.35))
+# Adding a third LSTM layer and some Dropout regularisation
 regressor.add(LSTM(units = 32, return_sequences = True))
 regressor.add(Dropout(0.35))
+# Adding a fourth LSTM layer and some Dropout regularisation
 regressor.add(LSTM(units = 32))
 regressor.add(Dropout(0.35))
-regressor.add(Dense(units = 1,activation="sigmoid"))
+# Adding the output layer,units 設為 1
+regressor.add(Dense(units = 1,activation="sigmoid"))    #激勵層
+# Compiling
 regressor.compile(optimizer = 'adam', loss="binary_crossentropy",metrics=["accuracy"])
 print(regressor.summary())
 
@@ -120,11 +128,11 @@ plt.title("model loss")
 plt.legend(["train","valid"],loc = "upper left")
 plt.show()
 
-### 變數重要性:顯示MACD、台股平均本益比及RSI為重要特徵值
+### 變數重要性:顯示MACD、台股平均本益比及RSI為重要特徵值.Permutation Feature Importance:https://christophm.github.io/interpretable-ml-book/feature-importance.html
 results = []
 print(' Computing LSTM feature importance...')
 # COMPUTE BASELINE (NO SHUFFLE)
-oof_preds = regressor.predict(X_test, verbose='0').squeeze() 
+oof_preds = regressor.predict(X_test, verbose='0').squeeze()    #Remove axes of length one from a
 baseline_mae = np.mean(np.abs(oof_preds-y_test))
 
 results.append({'feature':'BASELINE','mae':baseline_mae})           
@@ -139,9 +147,12 @@ for k in tqdm(range(len(list(test_X.columns)))):
     mae = np.mean(np.abs( oof_preds-y_test ))
     results.append({'feature':test_X.columns[k],'mae':mae})
     X_test[:,:,k] = save_col
+print(results)
 
 
 ### 模型結果(測試集)
 rate=regressor.evaluate(X_test, y_test,verbose='1')
 print('loss:',rate[0])
 print('accuracy:',rate[1])
+
+
